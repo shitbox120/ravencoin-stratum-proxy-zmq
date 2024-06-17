@@ -1,3 +1,6 @@
+import zmq
+
+# Other imports
 import asyncio
 from copy import deepcopy
 import json
@@ -27,6 +30,10 @@ from typing import Set, List, Optional
 
 KAWPOW_EPOCH_LENGTH = 7500
 hashratedict = {}
+
+context = zmq.Context()
+zmq_socket = context.socket(zmq.PUB)
+zmq_socket.bind("tcp://127.0.0.1:28332")
 
 
 def var_int(i: int) -> bytes:
@@ -302,6 +309,9 @@ class StratumSession(RPCSession):
         msg = f"Found block (may or may not be accepted by the chain): {block_height}"
         print(msg)
         await self.send_notification("client.show_message", (msg,))
+
+        # Publish block hash via ZMQ
+        zmq_socket.send_string(f"hashblock {state.headerHash}")
 
         return True
 
