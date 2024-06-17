@@ -89,6 +89,13 @@ Connect to it with your miner of choise:
 
 <a name="help"/>
 
+##ZMQ implementation:
+* Added the import zmq statement.
+* Initialized a ZMQ context and socket at the beginning of the script.
+* Bound the ZMQ socket to tcp://127.0.0.1:28332.
+* Published the block hash to the ZMQ socket in the handle_submit method after a block is found.
+
+
 ## Help:
 @kralverde#0550 is avaliable on the community ravencoin server (https://discord.gg/jn6uhur)
 Donate: 
