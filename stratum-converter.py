@@ -33,7 +33,7 @@ hashratedict = {}
 
 context = zmq.Context()
 zmq_socket = context.socket(zmq.PUB)
-zmq_socket.bind("tcp://127.0.0.1:28332")
+zmq_socket.connect("tcp://127.0.0.1:28332")
 
 
 def var_int(i: int) -> bytes:
